@@ -39,6 +39,13 @@ export default class EditTodo extends Component{
             })
     }
 
+    // onclick Handlers
+    onChangeTodoDescription(e) {
+        this.setState({
+            todo_description: e.target.value
+        });
+    }
+
     render() {
         return (
             <div>
