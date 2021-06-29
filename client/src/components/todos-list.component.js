@@ -7,7 +7,7 @@ const Todo = props => (
     <tr>
         {/* Applying the completed class only if it is completed, else no class */}
         <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>
-        <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_responsible}</td>
+        <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_deadline}</td>
         <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_priority}</td>
         <td>
             <Link to={"/edit/"+props.todo._id}>Edit</Link>
@@ -33,6 +33,17 @@ export default class TodosList extends Component{
             })
     }
 
+    // For updating the completed items instantly
+    componentDidUpdate() {
+        axios.get('http://localhost:4000/todos/')
+        .then(response => {
+            this.setState({todos: response.data});
+        })
+        .catch(function (error) {
+            console.log(error);
+        })   
+    }
+
     todoList() {
         return this.state.todos.map(function(currentTodo, i) {
             return <Todo todo={currentTodo} key={i} />;
@@ -48,7 +59,7 @@ export default class TodosList extends Component{
                     <thead>
                         <tr>
                             <th>Description</th>
-                            <th>Responsible</th>
+                            <th>Deadline</th>
                             <th>Priority</th>
                             <th>Actions</th>
                         </tr>

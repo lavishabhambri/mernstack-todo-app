@@ -9,14 +9,14 @@ export default class CreateTodo extends Component{
         
         // Binding to this object so that we can use the state object
         this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
-        this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);
+        this.onChangeTodoDeadline = this.onChangeTodoDeadline.bind(this);
         this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
 
         this.state = {
             todo_description: '',   // Description of the todo-task
-            todo_responsible: '',   // Who is responsible for performing the task
+            todo_deadline: '',      // What is the deadline for performing the task
             todo_priority: '',      // Priority of the todo-task (low/medium/high)
             todo_completed: false   // Whether the task is completed or not
         }
@@ -30,9 +30,9 @@ export default class CreateTodo extends Component{
     }
 
 
-    onChangeTodoResponsible(e){
+    onChangeTodoDeadline(e){
         this.setState({
-            todo_responsible: e.target.value
+            todo_deadline: e.target.value
         })
     }
 
@@ -49,14 +49,14 @@ export default class CreateTodo extends Component{
         // Submit logic
         console.log('Form submitted');
         console.log(`Todo Description: ${this.state.todo_description}`);
-        console.log(`Todo Responsible: ${this.state.todo_responsible}`);
+        console.log(`Todo Deadline: ${this.state.todo_deadline}`);
         console.log(`Todo Priority: ${this.state.todo_priority}`);
         console.log(`Todo Completed: ${this.state.todo_completed}`);
 
         // Creating a new todo object
         const newTodo = {
             todo_description: this.state.todo_description,
-            todo_responsible: this.state.todo_responsible,
+            todo_deadline: this.state.todo_deadline,
             todo_priority: this.state.todo_priority,
             todo_completed: this.state.todo_completed
         }
@@ -69,7 +69,7 @@ export default class CreateTodo extends Component{
         // Resetting all the values
         this.setState({
             todo_description: '',
-            todo_responsible: '',
+            todo_deadline: '',
             todo_priority: '',
             todo_completed: false
         });
@@ -89,14 +89,17 @@ export default class CreateTodo extends Component{
                                 className="form-control"
                                 value={this.state.todo_description}
                                 onChange={this.onChangeTodoDescription}
+                                required
                                 />
                     </div>
                     <div className="form-group">
-                        <label>Responsible: </label>
-                        <input  type="text"
+                        <label>Deadline: </label>
+                        <input  type="date"
                                 className="form-control"
-                                value={this.state.todo_responsible}
-                                onChange={this.onChangeTodoResponsible}
+                                value={this.state.todo_deadline}
+                                onChange={this.onChangeTodoDeadline}
+                                required
+                                pattern="\d{1,2}/\d{1,2}/\d{4}"
                                 />
                     </div>
                     <div className="form-group">
@@ -109,6 +112,7 @@ export default class CreateTodo extends Component{
                                     // Checking if the priority = Low
                                     checked={this.state.todo_priority==='Low'}  
                                     onChange={this.onChangeTodoPriority}
+                                    required
                                     />
                             <label className="form-check-label">Low</label>
                         </div>
@@ -121,6 +125,7 @@ export default class CreateTodo extends Component{
                                     // Checking if the priority = Medium
                                     checked={this.state.todo_priority==='Medium'}
                                     onChange={this.onChangeTodoPriority}
+                                    required
                                     />
                             <label className="form-check-label">Medium</label>
                         </div>
@@ -133,6 +138,7 @@ export default class CreateTodo extends Component{
                                     // Checking if the priority = High
                                     checked={this.state.todo_priority==='High'}
                                     onChange={this.onChangeTodoPriority}
+                                    required
                                     />
                             <label className="form-check-label">High</label>
                         </div>

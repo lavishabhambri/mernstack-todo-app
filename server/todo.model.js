@@ -7,7 +7,7 @@ let Todo = new Schema({
     todo_description: {
         type: String
     },
-    todo_responsible: {
+    todo_deadline: {
         type: String
     },
     todo_priority: {

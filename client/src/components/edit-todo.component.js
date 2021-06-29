@@ -10,14 +10,14 @@ export default class EditTodo extends Component{
 
         // Binding this object so as to use state object
         this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
-        this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);
+        this.onChangeTodoDeadline = this.onChangeTodoDeadline.bind(this);
         this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
         this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             todo_description: '',
-            todo_responsible: '',
+            todo_deadline: '',
             todo_priority: '',
             todo_completed: false  // initially tood is not completed
         }
@@ -29,7 +29,7 @@ export default class EditTodo extends Component{
             .then(response => {
                 this.setState({
                     todo_description: response.data.todo_description,
-                    todo_responsible: response.data.todo_responsible,
+                    todo_deadline: response.data.todo_deadline,
                     todo_priority: response.data.todo_priority,
                     todo_completed: response.data.todo_completed
                 })
@@ -46,9 +46,9 @@ export default class EditTodo extends Component{
         });
     }
 
-    onChangeTodoResponsible(e) {
+    onChangeTodoDeadline(e) {
         this.setState({
-            todo_responsible: e.target.value
+            todo_deadline: e.target.value
         });
     }
 
@@ -65,16 +65,20 @@ export default class EditTodo extends Component{
     }
 
     onSubmit(e) {
+        // Preventing the default action of browser on submitting a form
         e.preventDefault();
+
+        // Creating updated object
         const obj = {
             todo_description: this.state.todo_description,
-            todo_responsible: this.state.todo_responsible,
+            todo_deadline: this.state.todo_deadline,
             todo_priority: this.state.todo_priority,
             todo_completed: this.state.todo_completed
         };
         axios.post('http://localhost:4000/todos/update/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
 
+        // navigate user to home 
         this.props.history.push('/');
     }
 
@@ -93,11 +97,12 @@ export default class EditTodo extends Component{
                                 />
                     </div>
                     <div className="form-group">
-                        <label>Responsible: </label>
-                        <input  type="text"
+                        <label>Deadline: </label>
+                        <input  type="date"
                                 className="form-control"
-                                value={this.state.todo_responsible}
-                                onChange={this.onChangeTodoResponsible}
+                                value={this.state.todo_deadline}
+                                onChange={this.onChangeTodoDeadline}
+                                pattern="\d{1,2}/\d{1,2}/\d{4}"
                                 />
                     </div>
                     <div className="form-group">
