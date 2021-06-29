@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const Todo = props => (
     <tr>
+        {/* Applying the completed class only if it is completed, else no class */}
         <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>
         <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_responsible}</td>
         <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_priority}</td>
